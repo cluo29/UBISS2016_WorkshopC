@@ -43,11 +43,11 @@ CREATE TABLE IF NOT EXISTS `questions` (
 
 
 -- Dumping structure for table backcap.responses
-CREATE TABLE IF NOT EXISTS `responses` (
+CREATE TABLE IF NOT EXISTS `options` (
   `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains the responses to the questions.';
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains the options to the questions.';
 
 -- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
