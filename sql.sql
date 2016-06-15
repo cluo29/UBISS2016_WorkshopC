@@ -15,20 +15,11 @@ CREATE DATABASE IF NOT EXISTS `backcap` /*!40100 DEFAULT CHARACTER SET latin1 */
 USE `backcap`;
 
 
--- Dumping structure for table backcap.answers
-CREATE TABLE IF NOT EXISTS `answers` (
+CREATE TABLE IF NOT EXISTS `study` (
   `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
-  `question_id` int(255) unsigned NOT NULL,
-  `response_id` int(255) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_ANSWERS_QUESTION` (`question_id`),
-  KEY `FK_ANSWERS_RESPONSE` (`response_id`),
-  CONSTRAINT `FK_ANSWERS_QUESTION` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`),
-  CONSTRAINT `FK_ANSWERS_RESPONSE` FOREIGN KEY (`response_id`) REFERENCES `options` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains the answers to the questions';
-
--- Data exporting was unselected.
-
+  `name` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains all the study';
 
 -- Dumping structure for table backcap.questions
 CREATE TABLE IF NOT EXISTS `questions` (
@@ -48,6 +39,22 @@ CREATE TABLE IF NOT EXISTS `options` (
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains the options to the questions.';
+
+
+-- Dumping structure for table backcap.answers
+CREATE TABLE IF NOT EXISTS `answers` (
+  `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
+  `question_id` int(255) unsigned NOT NULL,
+  `response_id` int(255) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_ANSWERS_QUESTION` (`question_id`),
+  KEY `FK_ANSWERS_RESPONSE` (`response_id`),
+  CONSTRAINT `FK_ANSWERS_QUESTION` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`),
+  CONSTRAINT `FK_ANSWERS_RESPONSE` FOREIGN KEY (`response_id`) REFERENCES `options` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains the answers to the questions';
+
+-- Data exporting was unselected.
+
 
 -- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
