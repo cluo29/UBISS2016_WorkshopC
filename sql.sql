@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   KEY `FK_ANSWERS_QUESTION` (`question_id`),
   KEY `FK_ANSWERS_RESPONSE` (`response_id`),
   CONSTRAINT `FK_ANSWERS_QUESTION` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`),
-  CONSTRAINT `FK_ANSWERS_RESPONSE` FOREIGN KEY (`response_id`) REFERENCES `responses` (`id`)
+  CONSTRAINT `FK_ANSWERS_RESPONSE` FOREIGN KEY (`response_id`) REFERENCES `options` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='This table contains the answers to the questions';
 
 -- Data exporting was unselected.
