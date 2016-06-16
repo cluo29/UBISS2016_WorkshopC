@@ -310,10 +310,15 @@ body {
 
 
     <script>
-    function questionAnalyze(parameter,question)
+    function questionManage(study_id,question)
+    {
+        window.location = "manage_question.php?study_id=" + study_id +"&question_id="+question;
+    };
+
+    function questionAnalyze(study_id,question)
     {
         console.log("send questions number $$$$$$$$$$$$ ");
-        window.location = "analyze_question.php?study_id=" + parameter +"&question_id="+question;
+        window.location = "analyze_question.php?study_id=" + study_id +"&question_id="+question;
     };
 
     function home()
