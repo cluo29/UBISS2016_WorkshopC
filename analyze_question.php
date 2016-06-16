@@ -1,6 +1,9 @@
 <html>
     <head>
         <title>Crowdsourcing Researcher Dashboard</title>
+    <script src="lib/js/jquery.min.js"></script>
+    <script src="lib/js/chartphp.js"></script>
+    <link rel="stylesheet" href="lib/js/chartphp.css">
 
         <style>
 
@@ -80,6 +83,13 @@ body {
     background-color: black;
 }
 
+.center {
+    display: block;
+    margin: 0 auto;
+    width:50%; 
+    min-width:450px;
+}
+
 </style>
     </head>
     <body>
@@ -148,74 +158,6 @@ body {
         ?>   
 
 
-        <?php
-
-                $optionsArray = array();
-                $option_number=0;
-
-                $servername = "127.0.0.1";
-                $username = "root";
-                $password = "cjjawl";
-                $dbname = "backcap";
-                //options
-                try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $rowNumber=0;
-            
-                    $question_id=$_GET["question_id"];
-
-                    $stmt=$conn->query("SELECT id,name FROM backcap.options"); 
-                    foreach($stmt as $row){
-                        $option_number=$option_number+1;
-                        $optionsArray[$option_number] = $row['name'];
-                    }
-                }
-                catch(PDOException $e)
-                {
-                    echo "Error: " . $e->getMessage();
-                }   
-                $conn = null;
-
-                //responses
-                $response_number = array();
-                try {
-                    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-                    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                    $rowNumber=0;
-            
-                    $question_id=$_GET["question_id"];
-
-                    $stmt=$conn->query("SELECT option_id FROM backcap.answers Where question_id = " .$question_id. ""); 
-                    $response_number[1]=0;
-                    $response_number[2]=0;
-                    $response_number[3]=0;
-                    $response_number[4]=0;
-                    $response_number[5]=0;
-
-                    foreach($stmt as $row){
-        
-                        $rowNumber=$rowNumber+1;
-                        $name= $row['option_id'];
-                        $response_number[$name]=$response_number[$name]+1;
-
-                        //count reponses from all devices
-                       
-                    }
-                    echo "<h2>Response count</h2>";
-                    echo "<p>".$optionsArray[1]. ": ".$response_number[1]. "</p>";
-                    echo "<p>".$optionsArray[2]. ": ".$response_number[2]. "</p>";
-                    echo "<p>".$optionsArray[3]. ": ".$response_number[3]. "</p>";
-                    echo "<p>".$optionsArray[4]. ": ".$response_number[4]. "</p>";
-                    echo "<p>".$optionsArray[5]. ": ".$response_number[5]. "</p>";
-
-                }
-                catch(PDOException $e)
-                {
-                    echo "Error: " . $e->getMessage();
-                }   
-                $conn = null;
-        ?>   
        
 <?php
 
@@ -275,12 +217,15 @@ body {
 
                         //count reponses from unique devices
                     }
+                    /*
+                    
                     echo "<h2>Response count from unique devices</h2>";
                     echo "<p>".$optionsArray[1]. ": ".$response_number[1]. "</p>";
                     echo "<p>".$optionsArray[2]. ": ".$response_number[2]. "</p>";
                     echo "<p>".$optionsArray[3]. ": ".$response_number[3]. "</p>";
                     echo "<p>".$optionsArray[4]. ": ".$response_number[4]. "</p>";
                     echo "<p>".$optionsArray[5]. ": ".$response_number[5]. "</p>";
+                    */
 
                 }
                 catch(PDOException $e)
@@ -288,8 +233,27 @@ body {
                     echo "Error: " . $e->getMessage();
                 }   
                 $conn = null;
-                $study_id=$_GET["study_id"];
 
+
+
+                include("lib/inc/chartphp_dist.php");
+                $p = new chartphp();
+                $p->data = array(array(
+                    array($optionsArray[1],$response_number[1]),
+                    array($optionsArray[2],$response_number[2]),
+                    array($optionsArray[3],$response_number[3]),
+                    array($optionsArray[4],$response_number[4]),
+                    array($optionsArray[5],$response_number[5])
+                    ));
+                $p->chart_type = "bar";
+                $out = $p->render("c1");
+
+                $study_id=$_GET["study_id"];
+ ?>  
+                <div class="center"> 
+            <?php echo $out; ?> 
+        </div> 
+<?php
                 echo "<p><input type=\"button\" onclick=\"studyManage(".$study_id. ");\" value=\"Back To Study\"/></p>";
         ?>   
     </body>
