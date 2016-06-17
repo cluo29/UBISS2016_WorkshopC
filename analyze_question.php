@@ -202,8 +202,7 @@ body {
                     $response_number[1]=0;
                     $response_number[2]=0;
                     $response_number[3]=0;
-                    $response_number[4]=0;
-                    $response_number[5]=0;
+                    
 
                     foreach($stmt as $row){
                         if($lastDevice!=$row['device_id'])
@@ -242,8 +241,7 @@ body {
                     array($optionsArray[1],$response_number[1]),
                     array($optionsArray[2],$response_number[2]),
                     array($optionsArray[3],$response_number[3]),
-                    array($optionsArray[4],$response_number[4]),
-                    array($optionsArray[5],$response_number[5])
+                    
                     ));
                 $p->chart_type = "bar";
                 $out = $p->render("c1");
